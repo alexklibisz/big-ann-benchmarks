@@ -1,0 +1,14 @@
+FROM billion-scale-benchmark
+
+RUN apt-get update
+RUN apt-get install -y wget software-properties-common
+RUN wget -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - \
+	&& add-apt-repository -y https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ \
+	&& apt-get install -y adoptopenjdk-15-hotspot \
+	&& java -version
+
+WORKDIR /home/app
+#ADD https://github.com/alexklibisz/elastiknn/releases/download/elastiknn-ann-benchmarks%2Fbuild%2Flibs%2Fann-benchmarks-7.14.0.0.jar/ann-benchmarks-7.14.0.0-all.jar /opt/app/ann-benchmarks.jar
+ADD ann-benchmarks-7.14.1.1-all.jar /home/app/ann-benchmarks.jar
+
+EXPOSE 9091

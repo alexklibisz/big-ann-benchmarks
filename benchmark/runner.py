@@ -71,7 +71,9 @@ function""" % (definition.module, definition.constructor, definition.arguments)
     distance = ds.distance()
     search_type = ds.search_type()
     print(f"Running {definition.algorithm} on {dataset}")
-    print(fr"Got {len(X)} queries")
+    print(f"Got {len(X)} queries")
+    # print(X.mean(), X.std(), X.min(), X.max())
+    # import pdb; pdb.set_trace()
     
     try:
         # Try loading the index from the file
@@ -279,7 +281,9 @@ def run_docker(definition, dataset, count, runs, timeout, rebuild,
             },
             cpuset_cpus=cpu_limit,
             mem_limit=mem_limit,
-            detach=True)
+            detach=True,
+            ports={"9091": 9091}
+        )
 
     logger = logging.getLogger(f"annb.{container.short_id}")
 
@@ -334,5 +338,3 @@ def run_no_docker(definition, dataset, count, runs, timeout, rebuild,
     cmd.append(json.dumps(definition.arguments))
     cmd += [json.dumps(qag) for qag in definition.query_argument_groups]
     run_from_cmdline(cmd)
-
-

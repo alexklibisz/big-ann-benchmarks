@@ -121,6 +121,21 @@ deep-10M:
               [{"R":100, "L":100, "B":0.3, "M":15}]
           query-args: |
               [{"Ls":50, "BW":4, "T":16}]
+    elastiknn-t2:
+      docker-tag: billion-scale-benchmark-elastiknn
+      module: benchmark.algorithms.elastiknn
+      constructor: ElastiknnDenseFloatL2Lsh
+      base-args: ["@dimension", "@count"]
+      run-groups:
+        base:
+          args:
+            - [50]
+            - [8]
+            - [1]
+          query-args:
+            - [500]
+            - [0]
+
 deep-1B:
     faiss-t1:
       docker-tag: billion-scale-benchmark-faissconda
@@ -534,6 +549,21 @@ msturing-1M:
               [{"R":50, "L":50, "B":0.03, "M":1}]
           query-args: |
               [{"Ls":50, "BW":4, "T":16}]
+   elastiknn-t2:
+      docker-tag: billion-scale-benchmark-elastiknn
+      module: benchmark.algorithms.elastiknn
+      constructor: ElastiknnDenseFloatL2Lsh
+      base-args: [ "@dimension", "@count" ]
+      run-groups:
+        base:
+          args:
+            - [10]
+            - [3]
+            - [1]
+          query-args:
+            - [500]
+            - [0]
+
 msspacev-1M:
    diskann-t2:
       docker-tag: billion-scale-benchmark-diskann
