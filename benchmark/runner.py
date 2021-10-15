@@ -30,7 +30,7 @@ def run_individual_query(algo, X, distance, count, run_count, search_type):
             algo.query(X, count)
             total = (time.time() - start)
             results = algo.get_results()
-            assert len(results) == len(X)
+            assert len(results) == len(X), (len(results), len(X))
         else:
             algo.range_query(X, count)
             total = (time.time() - start)
@@ -72,8 +72,7 @@ function""" % (definition.module, definition.constructor, definition.arguments)
     search_type = ds.search_type()
     print(f"Running {definition.algorithm} on {dataset}")
     print(f"Got {len(X)} queries")
-    # print(X.mean(), X.std(), X.min(), X.max())
-    # import pdb; pdb.set_trace()
+    print(X.mean(), X.std(), X.min(), X.max())
     
     try:
         # Try loading the index from the file

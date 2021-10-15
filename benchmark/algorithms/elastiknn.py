@@ -1,6 +1,7 @@
 from multiprocessing import cpu_count
 from psutil import virtual_memory
 from benchmark.algorithms.httpann import HttpANN, HttpANNSubprocess
+from benchmark.datasets import DATASETS
 
 
 class ElastiknnDenseFloatL2Lsh(HttpANN, HttpANNSubprocess):
@@ -30,6 +31,17 @@ class ElastiknnDenseFloatL2Lsh(HttpANN, HttpANNSubprocess):
             "--port 8080",
             f"--parallelism {cpu_count()}"
         ])
+        self.base_name = f"elastiknn-dense-float-l2-lsh-{lsh_L}-{lsh_k}-{lsh_w}"
         HttpANNSubprocess.__init__(self, cmd)
-        HttpANN.__init__(self, server_url="http://0.0.0.0:8080", start_seconds=3,
-                         name=f"elastiknn-dense-float-l2-lsh-{lsh_L}-{lsh_k}-{lsh_w}")
+        HttpANN.__init__(self, server_url="http://0.0.0.0:8080", start_seconds=3, name=self.base_name)
+
+    def fit(self, dataset):
+        # ds = DATASETS[dataset]()
+        # for v in ds.get_dataset()[:10]:
+        #     print(v[:10])
+        super().fit(dataset)
+
+    def set_query_arguments(self, *query_args):
+        candidates, probes = query_args
+        self.name = f"{self.base_name}_{candidates}_{probes}"
+        super().set_query_arguments(candidates, probes)

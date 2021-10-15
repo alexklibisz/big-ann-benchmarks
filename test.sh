@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-#DATASET=deep-10M
-DATASET=msturing-1M
+DATASET=deep-10M
+#DATASET=msturing-1M
 
 sudo chown -R $(whoami):$(whoami) results/
 
